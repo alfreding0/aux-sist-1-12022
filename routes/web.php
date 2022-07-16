@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\PersonalController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,11 +18,10 @@ use Illuminate\Support\Facades\Route;
 
 
 Auth::routes();
+Route::get('/register', function () { return redirect()->route('home'); });
 
 Route::group(['middleware' => ['auth']], function () {
-    Route::get('/', function () {
-        return view('home');
-    })->name('home');
+    Route::get('/', function () { return view('home'); })->name('home');
         
     Route::get('/personal', [PersonalController::class, 'index'])->name('personal.index');
     Route::get('/personal/create', [PersonalController::class, 'create'])->name('personal.create');
@@ -38,4 +38,11 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/cliente/{id}/edit', [ClienteController::class, 'edit'])->name('cliente.edit');
     Route::put('/cliente/{id}/update', [ClienteController::class, 'update'])->name('cliente.update');
     Route::get('/cliente/{id}/destroy', [ClienteController::class, 'destroy'])->name('cliente.destroy');
+
+    Route::get('/usuario', [UserController::class, 'index'])->name('usuario.index');
+    Route::get('/usuario/create', [UserController::class, 'create'])->name('usuario.create');
+    Route::post('/usuario', [UserController::class, 'store'])->name('usuario.store');
+    Route::get('/usuario/{id}/edit', [UserController::class, 'edit'])->name('usuario.edit');
+    Route::put('/usuario/{id}/update', [UserController::class, 'update'])->name('usuario.update');
+    Route::get('/usuario/{id}/destroy', [UserController::class, 'destroy'])->name('usuario.destroy');
 });
